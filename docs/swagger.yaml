@@ -1,0 +1,905 @@
+basePath: /api/v1
+definitions:
+  models.APIError:
+    properties:
+      code:
+        type: string
+      details: {}
+      message:
+        type: string
+    type: object
+  models.APIMeta:
+    properties:
+      requestId:
+        type: string
+      timestamp:
+        type: string
+      version:
+        type: string
+    type: object
+  models.APIResponse:
+    properties:
+      data: {}
+      error:
+        $ref: '#/definitions/models.APIError'
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/models.APIMeta'
+      success:
+        type: boolean
+    type: object
+  models.AnimalSummary:
+    properties:
+      count:
+        type: integer
+      percentage:
+        type: number
+      trend:
+        type: string
+    type: object
+  models.AuthResponse:
+    properties:
+      refreshToken:
+        type: string
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.DashboardSummary:
+    properties:
+      activeProducts:
+        $ref: '#/definitions/models.ProductSummary'
+      monthlyExpense:
+        $ref: '#/definitions/models.FinanceSummary'
+      monthlyIncome:
+        $ref: '#/definitions/models.FinanceSummary'
+      totalAnimals:
+        $ref: '#/definitions/models.AnimalSummary'
+      totalLands:
+        $ref: '#/definitions/models.LandSummary'
+    type: object
+  models.FinanceSummary:
+    properties:
+      amount:
+        type: number
+      currency:
+        type: string
+      trend:
+        type: string
+    type: object
+  models.Land:
+    properties:
+      area:
+        type: number
+      createdAt:
+        type: string
+      crop:
+        type: string
+      id:
+        type: string
+      irrigationType:
+        type: string
+      lastActivity:
+        type: string
+      location:
+        $ref: '#/definitions/models.Location'
+      name:
+        type: string
+      productivity:
+        type: number
+      soilType:
+        type: string
+      status:
+        type: string
+      unit:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  models.LandActivity:
+    properties:
+      actualDate:
+        type: string
+      cost:
+        type: number
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      landId:
+        type: string
+      notes:
+        type: string
+      result:
+        type: string
+      scheduledDate:
+        type: string
+      type:
+        type: string
+    type: object
+  models.LandSummary:
+    properties:
+      area:
+        type: number
+      count:
+        type: integer
+      productivity:
+        type: number
+    type: object
+  models.Location:
+    properties:
+      address:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+    type: object
+  models.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.ProductSummary:
+    properties:
+      categories:
+        type: integer
+      count:
+        type: integer
+    type: object
+  models.RegisterRequest:
+    properties:
+      confirmPassword:
+        type: string
+      email:
+        type: string
+      farmName:
+        type: string
+      location:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - confirmPassword
+    - email
+    - farmName
+    - location
+    - name
+    - password
+    type: object
+  models.User:
+    properties:
+      avatar:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      farmName:
+        type: string
+      id:
+        type: string
+      isVerified:
+        type: boolean
+      location:
+        type: string
+      name:
+        type: string
+      role:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Destek
+    url: http://www.swagger.io/support
+  description: Flutter mobil uygulaması için Tarım Yönetim Sistemi REST API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Tarım Yönetim Sistemi API
+  version: "1.0"
+paths:
+  /auth/change-password:
+    put:
+      consumes:
+      - application/json
+      description: Kullanıcı şifresini değiştirir
+      parameters:
+      - description: Şifre bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Şifre değiştirme
+      tags:
+      - Auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Kullanıcı girişi yapar ve token döner
+      parameters:
+      - description: Giriş bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Kullanıcı girişi
+      tags:
+      - Auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Kullanıcı çıkışı yapar
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Çıkış yapma
+      tags:
+      - Auth
+  /auth/profile:
+    get:
+      consumes:
+      - application/json
+      description: Mevcut kullanıcının profil bilgilerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Kullanıcı profili
+      tags:
+      - Auth
+    put:
+      consumes:
+      - application/json
+      description: Kullanıcı profil bilgilerini günceller
+      parameters:
+      - description: Güncellenecek profil bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Profil güncelleme
+      tags:
+      - Auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refresh token ile yeni access token oluşturur
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties:
+                    type: string
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Token yenileme
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Yeni kullanıcı kaydı oluşturur
+      parameters:
+      - description: Kayıt bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Kullanıcı kaydı
+      tags:
+      - Auth
+  /dashboard/charts/income-expense:
+    get:
+      consumes:
+      - application/json
+      description: Aylık gelir-gider grafik verilerini getirir
+      parameters:
+      - description: Period (month/quarter/year)
+        enum:
+        - month
+        - quarter
+        - year
+        in: query
+        name: period
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Gelir-gider grafik
+      tags:
+      - Dashboard
+  /dashboard/charts/production:
+    get:
+      consumes:
+      - application/json
+      description: Üretim kategorileri grafik verilerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim grafik
+      tags:
+      - Dashboard
+  /dashboard/recent-activities:
+    get:
+      consumes:
+      - application/json
+      description: Son aktiviteleri listeler
+      parameters:
+      - description: 'Limit (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Son aktiviteler
+      tags:
+      - Dashboard
+  /dashboard/summary:
+    get:
+      consumes:
+      - application/json
+      description: Dashboard için özet istatistikleri getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.DashboardSummary'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Dashboard özet
+      tags:
+      - Dashboard
+  /lands:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının arazilerini listeler
+      parameters:
+      - description: Sayfa numarası
+        in: query
+        name: page
+        type: integer
+      - description: Sayfa başına kayıt
+        in: query
+        name: limit
+        type: integer
+      - description: Arazi durumu
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi listesi
+      tags:
+      - Lands
+    post:
+      consumes:
+      - application/json
+      description: Yeni arazi kaydı oluşturur
+      parameters:
+      - description: Arazi bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Land'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Land'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Yeni arazi oluşturma
+      tags:
+      - Lands
+  /lands/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Belirli bir araziyi siler
+      parameters:
+      - description: Arazi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi silme
+      tags:
+      - Lands
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir arazinin detaylarını getirir
+      parameters:
+      - description: Arazi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Land'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi detayları
+      tags:
+      - Lands
+    put:
+      consumes:
+      - application/json
+      description: Mevcut arazi bilgilerini günceller
+      parameters:
+      - description: Arazi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Güncellenecek arazi bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Land'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Land'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi güncelleme
+      tags:
+      - Lands
+  /lands/{id}/activities:
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir arazinin aktivitelerini listeler
+      parameters:
+      - description: Arazi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.LandActivity'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi aktiviteleri
+      tags:
+      - Lands
+    post:
+      consumes:
+      - application/json
+      description: Yeni arazi aktivitesi kaydı oluşturur
+      parameters:
+      - description: Arazi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Aktivite bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LandActivity'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.LandActivity'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi aktivitesi oluşturma
+      tags:
+      - Lands
+  /lands/productivity-analysis:
+    get:
+      consumes:
+      - application/json
+      description: Arazi verimlilik analizini getirir
+      parameters:
+      - description: Analiz periyodu
+        in: query
+        name: period
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Verimlilik analizi
+      tags:
+      - Lands
+  /lands/statistics:
+    get:
+      consumes:
+      - application/json
+      description: Arazi istatistiklerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Arazi istatistikleri
+      tags:
+      - Lands
+securityDefinitions:
+  BearerAuth:
+    description: JWT token ile kimlik doğrulama
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
