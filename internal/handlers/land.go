@@ -499,9 +499,9 @@ func (h *LandHandler) GetLandActivities(c *gin.Context) {
 	}
 	defer rows.Close()
 
-	var activities []models.LandActivity
+	var activities []models.LandActivityRecord
 	for rows.Next() {
-		var activity models.LandActivity
+		var activity models.LandActivityRecord
 		var scheduledDate, actualDate sql.NullTime
 		var cost sql.NullFloat64
 
@@ -550,7 +550,7 @@ func (h *LandHandler) CreateLandActivity(c *gin.Context) {
 		return
 	}
 
-	var req models.LandActivity
+	var req models.LandActivityRecord
 	if err := c.ShouldBindJSON(&req); err != nil {
 		utils.ErrorResponse(c, http.StatusBadRequest, "INVALID_REQUEST", "Geçersiz istek formatı", err.Error())
 		return
@@ -579,7 +579,7 @@ func (h *LandHandler) CreateLandActivity(c *gin.Context) {
 	}
 
 	// Oluşturulan aktiviteyi getir
-	var activity models.LandActivity
+	var activity models.LandActivityRecord
 	var scheduledDate, actualDate sql.NullTime
 	var cost sql.NullFloat64
 

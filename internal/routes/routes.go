@@ -78,7 +78,7 @@ func SetupRoutes(r *gin.Engine, db *sql.DB) {
 		{
 			livestock.GET("", livestockHandler.GetLivestock)
 			livestock.POST("", livestockHandler.CreateLivestock)
-			livestock.GET("/:id", livestockHandler.GetLivestock)
+			livestock.GET("/:id", livestockHandler.GetLivestockByID)
 			livestock.PUT("/:id", livestockHandler.UpdateLivestock)
 			livestock.DELETE("/:id", livestockHandler.DeleteLivestock)
 			livestock.GET("/statistics", livestockHandler.GetLivestockStatistics)
@@ -169,6 +169,18 @@ func SetupRoutes(r *gin.Engine, db *sql.DB) {
 			weather.GET("/current", weatherHandler.GetCurrentWeather)
 			weather.GET("/forecast", weatherHandler.GetWeatherForecast)
 			weather.GET("/agricultural-alerts", weatherHandler.GetAgriculturalAlerts)
+		}
+
+		// Reports routes (protected)
+		reportsHandler := handlers.NewReportsHandler(db)
+		reports := v1.Group("/reports")
+		reports.Use(middleware.Auth())
+		{
+			reports.GET("", reportsHandler.GetReports)
+			reports.POST("/generate", reportsHandler.GenerateReport)
+			reports.GET("/:id/download", reportsHandler.DownloadReport)
+			reports.GET("/performance-metrics", reportsHandler.GetPerformanceMetrics)
+			reports.GET("/comparison", reportsHandler.GetComparisonAnalysis)
 		}
 	}
 

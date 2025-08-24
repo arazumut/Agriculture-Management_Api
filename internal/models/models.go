@@ -100,8 +100,8 @@ type Transaction struct {
 	UpdatedAt     time.Time `json:"updatedAt" db:"updated_at"`
 }
 
-// Event etkinlik modeli
-type Event struct {
+// EventBasic temel etkinlik modeli
+type EventBasic struct {
 	ID                string     `json:"id" db:"id"`
 	UserID            string     `json:"userId" db:"user_id"`
 	Title             string     `json:"title" db:"title"`
@@ -119,8 +119,8 @@ type Event struct {
 	UpdatedAt         time.Time  `json:"updatedAt" db:"updated_at"`
 }
 
-// Notification bildirim modeli
-type Notification struct {
+// NotificationBasic temel bildirim modeli
+type NotificationBasic struct {
 	ID                string    `json:"id" db:"id"`
 	UserID            string    `json:"userId" db:"user_id"`
 	Title             string    `json:"title" db:"title"`
@@ -133,8 +133,8 @@ type Notification struct {
 	CreatedAt         time.Time `json:"createdAt" db:"created_at"`
 }
 
-// HealthRecord sağlık kaydı modeli
-type HealthRecord struct {
+// HealthRecordBasic temel sağlık kaydı modeli
+type HealthRecordBasic struct {
 	ID           string     `json:"id" db:"id"`
 	LivestockID  string     `json:"livestockId" db:"livestock_id"`
 	Type         string     `json:"type" db:"type"`
@@ -147,8 +147,8 @@ type HealthRecord struct {
 	CreatedAt    time.Time  `json:"createdAt" db:"created_at"`
 }
 
-// MilkProduction süt üretim modeli
-type MilkProduction struct {
+// MilkProductionBasic temel süt üretim modeli
+type MilkProductionBasic struct {
 	ID          string    `json:"id" db:"id"`
 	LivestockID string    `json:"livestockId" db:"livestock_id"`
 	Date        time.Time `json:"date" db:"date"`
@@ -158,8 +158,8 @@ type MilkProduction struct {
 	CreatedAt   time.Time `json:"createdAt" db:"created_at"`
 }
 
-// LandActivity arazi aktivitesi modeli
-type LandActivity struct {
+// LandActivityBasic temel arazi aktivitesi modeli
+type LandActivityBasic struct {
 	ID            string     `json:"id" db:"id"`
 	LandID        string     `json:"landId" db:"land_id"`
 	Type          string     `json:"type" db:"type"`
@@ -262,4 +262,187 @@ type APIMeta struct {
 	Timestamp string `json:"timestamp"`
 	Version   string `json:"version"`
 	RequestID string `json:"requestId"`
+}
+
+// CategoryData kategori verileri
+type CategoryData struct {
+	Name  string `json:"name"`
+	Count int    `json:"count"`
+	Icon  string `json:"icon"`
+	Color string `json:"color"`
+}
+
+// HealthRecord sağlık kaydı
+type HealthRecord struct {
+	ID           string     `json:"id" db:"id"`
+	AnimalID     string     `json:"animalId" db:"animal_id"`
+	Type         string     `json:"type" db:"type"`
+	Description  string     `json:"description" db:"description"`
+	Date         *time.Time `json:"date" db:"date"`
+	Veterinarian string     `json:"veterinarian" db:"veterinarian"`
+	Cost         *float64   `json:"cost" db:"cost"`
+	Notes        string     `json:"notes" db:"notes"`
+	NextCheckup  *time.Time `json:"nextCheckup" db:"next_checkup"`
+	CreatedAt    time.Time  `json:"createdAt" db:"created_at"`
+}
+
+// MilkProductionRecord süt üretim kaydı
+type MilkProductionRecord struct {
+	ID        string     `json:"id" db:"id"`
+	AnimalID  string     `json:"animalId" db:"animal_id"`
+	Date      *time.Time `json:"date" db:"date"`
+	Amount    float64    `json:"amount" db:"amount"`
+	Quality   string     `json:"quality" db:"quality"`
+	Notes     string     `json:"notes" db:"notes"`
+	CreatedAt time.Time  `json:"createdAt" db:"created_at"`
+}
+
+// Event takvim etkinliği
+type Event struct {
+	ID            string         `json:"id" db:"id"`
+	UserID        string         `json:"userId" db:"user_id"`
+	Title         string         `json:"title" db:"title"`
+	Description   string         `json:"description" db:"description"`
+	Type          string         `json:"type" db:"type"`
+	StartDate     *time.Time     `json:"startDate" db:"start_date"`
+	EndDate       *time.Time     `json:"endDate" db:"end_date"`
+	IsAllDay      bool           `json:"isAllDay" db:"is_all_day"`
+	Status        string         `json:"status" db:"status"`
+	Priority      string         `json:"priority" db:"priority"`
+	Location      string         `json:"location" db:"location"`
+	RelatedEntity *RelatedEntity `json:"relatedEntity" db:"-"`
+	Reminders     []Reminder     `json:"reminders" db:"-"`
+	CreatedAt     time.Time      `json:"createdAt" db:"created_at"`
+	UpdatedAt     time.Time      `json:"updatedAt" db:"updated_at"`
+}
+
+// RelatedEntity ilişkili varlık
+type RelatedEntity struct {
+	Type string `json:"type"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+// Reminder hatırlatıcı
+type Reminder struct {
+	Time   int    `json:"time"`
+	Method string `json:"method"`
+}
+
+// NotificationExtended genişletilmiş bildirim
+type NotificationExtended struct {
+	ID            string         `json:"id" db:"id"`
+	UserID        string         `json:"userId" db:"user_id"`
+	Title         string         `json:"title" db:"title"`
+	Message       string         `json:"message" db:"message"`
+	Type          string         `json:"type" db:"type"`
+	Priority      string         `json:"priority" db:"priority"`
+	IsRead        bool           `json:"isRead" db:"is_read"`
+	RelatedEntity *RelatedEntity `json:"relatedEntity" db:"-"`
+	Actions       []Action       `json:"actions" db:"-"`
+	CreatedAt     time.Time      `json:"createdAt" db:"created_at"`
+}
+
+// Action bildirim aksiyonu
+type Action struct {
+	Label  string `json:"label"`
+	Action string `json:"action"`
+	URL    string `json:"url"`
+}
+
+// Settings ayarlar
+type Settings struct {
+	General       GeneralSettings      `json:"general"`
+	Notifications NotificationSettings `json:"notifications"`
+	Privacy       PrivacySettings      `json:"privacy"`
+	Backup        BackupSettings       `json:"backup"`
+}
+
+// GeneralSettings genel ayarlar
+type GeneralSettings struct {
+	Language   string       `json:"language"`
+	Currency   string       `json:"currency"`
+	DateFormat string       `json:"dateFormat"`
+	TimeFormat string       `json:"timeFormat"`
+	Units      UnitSettings `json:"units"`
+}
+
+// UnitSettings birim ayarları
+type UnitSettings struct {
+	Area   string `json:"area"`
+	Weight string `json:"weight"`
+	Volume string `json:"volume"`
+}
+
+// NotificationSettings bildirim ayarları
+type NotificationSettings struct {
+	Push  bool `json:"push"`
+	Email bool `json:"email"`
+	SMS   bool `json:"sms"`
+}
+
+// PrivacySettings gizlilik ayarları
+type PrivacySettings struct {
+	LocationSharing bool `json:"locationSharing"`
+	DataAnalytics   bool `json:"dataAnalytics"`
+	PersonalizedAds bool `json:"personalizedAds"`
+}
+
+// BackupSettings yedekleme ayarları
+type BackupSettings struct {
+	AutoBackup      bool   `json:"autoBackup"`
+	BackupFrequency string `json:"backupFrequency"`
+	CloudStorage    bool   `json:"cloudStorage"`
+}
+
+// Weather hava durumu
+type Weather struct {
+	Location      string  `json:"location"`
+	Temperature   float64 `json:"temperature"`
+	Humidity      float64 `json:"humidity"`
+	WindSpeed     float64 `json:"windSpeed"`
+	WindDirection string  `json:"windDirection"`
+	Pressure      float64 `json:"pressure"`
+	Visibility    float64 `json:"visibility"`
+	UVIndex       float64 `json:"uvIndex"`
+	Condition     string  `json:"condition"`
+	Icon          string  `json:"icon"`
+	LastUpdated   string  `json:"lastUpdated"`
+}
+
+// WeatherForecast hava durumu tahmini
+type WeatherForecast struct {
+	Date       string  `json:"date"`
+	MinTemp    float64 `json:"minTemp"`
+	MaxTemp    float64 `json:"maxTemp"`
+	Condition  string  `json:"condition"`
+	Icon       string  `json:"icon"`
+	Humidity   float64 `json:"humidity"`
+	RainChance float64 `json:"rainChance"`
+	WindSpeed  float64 `json:"windSpeed"`
+}
+
+// AgriculturalAlert tarımsal uyarı
+type AgriculturalAlert struct {
+	Type            string   `json:"type"`
+	Severity        string   `json:"severity"`
+	Title           string   `json:"title"`
+	Description     string   `json:"description"`
+	StartDate       string   `json:"startDate"`
+	EndDate         string   `json:"endDate"`
+	Recommendations []string `json:"recommendations"`
+}
+
+// LandActivityRecord arazi aktivitesi kaydı
+type LandActivityRecord struct {
+	ID            string     `json:"id" db:"id"`
+	LandID        string     `json:"landId" db:"land_id"`
+	Type          string     `json:"type" db:"type"`
+	Description   string     `json:"description" db:"description"`
+	ScheduledDate *time.Time `json:"scheduledDate" db:"scheduled_date"`
+	ActualDate    *time.Time `json:"actualDate" db:"actual_date"`
+	Notes         string     `json:"notes" db:"notes"`
+	Cost          *float64   `json:"cost" db:"cost"`
+	Result        string     `json:"result" db:"result"`
+	CreatedAt     time.Time  `json:"createdAt" db:"created_at"`
 }
