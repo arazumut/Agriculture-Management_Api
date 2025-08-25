@@ -646,7 +646,7 @@ func (h *LivestockHandler) CreateHealthRecord(c *gin.Context) {
 // @Param startDate query string false "Başlangıç tarihi"
 // @Param endDate query string false "Bitiş tarihi"
 // @Param animalId query string false "Hayvan ID"
-// @Success 200 {object} models.APIResponse{data=[]models.MilkProduction}
+// @Success 200 {object} models.APIResponse{data=[]models.MilkProductionRecord}
 // @Failure 401 {object} models.APIResponse
 // @Router /livestock/milk-production [get]
 func (h *LivestockHandler) GetMilkProduction(c *gin.Context) {
@@ -718,8 +718,8 @@ func (h *LivestockHandler) GetMilkProduction(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param request body models.MilkProduction true "Süt üretim bilgileri"
-// @Success 201 {object} models.APIResponse{data=models.MilkProduction}
+// @Param request body models.MilkProductionRecord true "Süt üretim bilgileri"
+// @Success 201 {object} models.APIResponse{data=models.MilkProductionRecord}
 // @Failure 400 {object} models.APIResponse
 // @Failure 401 {object} models.APIResponse
 // @Router /livestock/milk-production [post]

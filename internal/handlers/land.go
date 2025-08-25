@@ -22,7 +22,31 @@ func NewLandHandler(db *sql.DB) *LandHandler {
 
 // GetLands arazi listesi
 // @Summary Arazi listesi
-// @Description Kullanıcının arazilerini listeler
+// @Description Kullanıcının ar// GetLandActivities arazi aktiviteleri
+// @Summary Arazi aktiviteleri
+// @Descri// CreateLandActivity arazi aktivitesi oluşturma
+// @Summary Arazi aktivitesi oluşturma
+// @Description Arazi için yeni aktivite oluşturur
+// @Tags Lands
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path string true "Arazi ID"
+// @Param request body models.LandActivityRecord true "Aktivite bilgileri"
+// @Success 201 {object} models.APIResponse{data=models.LandActivityRecord}
+// @Failure 400 {object} models.APIResponse
+// @Failure 401 {object} models.APIResponse
+// @Failure 404 {object} models.APIResponse
+// @Router /lands/{id}/activities [post]in aktiviteleri listeler
+// @Tags Lands
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path string true "Arazi ID"
+// @Success 200 {object} models.APIResponse{data=[]models.LandActivityRecord}
+// @Failure 401 {object} models.APIResponse
+// @Failure 404 {object} models.APIResponse
+// @Router /lands/{id}/activities [get]steler
 // @Tags Lands
 // @Accept json
 // @Produce json
@@ -461,7 +485,7 @@ func (h *LandHandler) GetProductivityAnalysis(c *gin.Context) {
 // @Produce json
 // @Security BearerAuth
 // @Param id path string true "Arazi ID"
-// @Success 200 {object} models.APIResponse{data=[]models.LandActivity}
+// @Success 200 {object} models.APIResponse{data=[]models.LandActivityRecord}
 // @Failure 401 {object} models.APIResponse
 // @Failure 404 {object} models.APIResponse
 // @Router /lands/{id}/activities [get]
@@ -531,8 +555,8 @@ func (h *LandHandler) GetLandActivities(c *gin.Context) {
 // @Produce json
 // @Security BearerAuth
 // @Param id path string true "Arazi ID"
-// @Param request body models.LandActivity true "Aktivite bilgileri"
-// @Success 201 {object} models.APIResponse{data=models.LandActivity}
+// @Param request body models.LandActivityRecord true "Aktivite bilgileri"
+// @Success 201 {object} models.APIResponse{data=models.LandActivityRecord}
 // @Failure 400 {object} models.APIResponse
 // @Failure 401 {object} models.APIResponse
 // @Failure 404 {object} models.APIResponse

@@ -29,6 +29,25 @@ definitions:
       success:
         type: boolean
     type: object
+  models.AgriculturalAlert:
+    properties:
+      description:
+        type: string
+      endDate:
+        type: string
+      recommendations:
+        items:
+          type: string
+        type: array
+      severity:
+        type: string
+      startDate:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+    type: object
   models.AnimalSummary:
     properties:
       count:
@@ -47,6 +66,26 @@ definitions:
       user:
         $ref: '#/definitions/models.User'
     type: object
+  models.BackupSettings:
+    properties:
+      autoBackup:
+        type: boolean
+      backupFrequency:
+        type: string
+      cloudStorage:
+        type: boolean
+    type: object
+  models.CategoryData:
+    properties:
+      color:
+        type: string
+      count:
+        type: integer
+      icon:
+        type: string
+      name:
+        type: string
+    type: object
   models.DashboardSummary:
     properties:
       activeProducts:
@@ -60,6 +99,41 @@ definitions:
       totalLands:
         $ref: '#/definitions/models.LandSummary'
     type: object
+  models.Event:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      isAllDay:
+        type: boolean
+      location:
+        type: string
+      priority:
+        type: string
+      relatedEntity:
+        $ref: '#/definitions/models.RelatedEntity'
+      reminders:
+        items:
+          $ref: '#/definitions/models.Reminder'
+        type: array
+      startDate:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
   models.FinanceSummary:
     properties:
       amount:
@@ -67,6 +141,42 @@ definitions:
       currency:
         type: string
       trend:
+        type: string
+    type: object
+  models.GeneralSettings:
+    properties:
+      currency:
+        type: string
+      dateFormat:
+        type: string
+      language:
+        type: string
+      timeFormat:
+        type: string
+      units:
+        $ref: '#/definitions/models.UnitSettings'
+    type: object
+  models.HealthRecord:
+    properties:
+      animalId:
+        type: string
+      cost:
+        type: number
+      createdAt:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      nextCheckup:
+        type: string
+      notes:
+        type: string
+      type:
+        type: string
+      veterinarian:
         type: string
     type: object
   models.Land:
@@ -100,7 +210,7 @@ definitions:
       userId:
         type: string
     type: object
-  models.LandActivity:
+  models.LandActivityRecord:
     properties:
       actualDate:
         type: string
@@ -132,6 +242,39 @@ definitions:
       productivity:
         type: number
     type: object
+  models.Livestock:
+    properties:
+      birthDate:
+        type: string
+      breed:
+        type: string
+      createdAt:
+        type: string
+      father:
+        type: string
+      gender:
+        type: string
+      healthStatus:
+        type: string
+      id:
+        type: string
+      location:
+        type: string
+      mother:
+        type: string
+      notes:
+        type: string
+      tagNumber:
+        type: string
+      type:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+      weight:
+        type: number
+    type: object
   models.Location:
     properties:
       address:
@@ -151,12 +294,80 @@ definitions:
     - email
     - password
     type: object
+  models.MilkProductionRecord:
+    properties:
+      amount:
+        type: number
+      animalId:
+        type: string
+      createdAt:
+        type: string
+      date:
+        type: string
+      id:
+        type: string
+      notes:
+        type: string
+      quality:
+        type: string
+    type: object
+  models.NotificationSettings:
+    properties:
+      email:
+        type: boolean
+      push:
+        type: boolean
+      sms:
+        type: boolean
+    type: object
+  models.PrivacySettings:
+    properties:
+      dataAnalytics:
+        type: boolean
+      locationSharing:
+        type: boolean
+      personalizedAds:
+        type: boolean
+    type: object
   models.ProductSummary:
     properties:
       categories:
         type: integer
       count:
         type: integer
+    type: object
+  models.Production:
+    properties:
+      amount:
+        type: number
+      category:
+        type: string
+      createdAt:
+        type: string
+      harvestDate:
+        type: string
+      id:
+        type: string
+      landId:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      price:
+        type: number
+      quality:
+        type: string
+      status:
+        type: string
+      storageLocation:
+        type: string
+      unit:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
     type: object
   models.RegisterRequest:
     properties:
@@ -181,6 +392,73 @@ definitions:
     - name
     - password
     type: object
+  models.RelatedEntity:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  models.Reminder:
+    properties:
+      method:
+        type: string
+      time:
+        type: integer
+    type: object
+  models.Settings:
+    properties:
+      backup:
+        $ref: '#/definitions/models.BackupSettings'
+      general:
+        $ref: '#/definitions/models.GeneralSettings'
+      notifications:
+        $ref: '#/definitions/models.NotificationSettings'
+      privacy:
+        $ref: '#/definitions/models.PrivacySettings'
+    type: object
+  models.Transaction:
+    properties:
+      amount:
+        type: number
+      category:
+        type: string
+      createdAt:
+        type: string
+      currency:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      notes:
+        type: string
+      paymentMethod:
+        type: string
+      receipt:
+        type: string
+      status:
+        type: string
+      type:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  models.UnitSettings:
+    properties:
+      area:
+        type: string
+      volume:
+        type: string
+      weight:
+        type: string
+    type: object
   models.User:
     properties:
       avatar:
@@ -203,6 +481,50 @@ definitions:
         type: string
       updatedAt:
         type: string
+    type: object
+  models.Weather:
+    properties:
+      condition:
+        type: string
+      humidity:
+        type: number
+      icon:
+        type: string
+      lastUpdated:
+        type: string
+      location:
+        type: string
+      pressure:
+        type: number
+      temperature:
+        type: number
+      uvIndex:
+        type: number
+      visibility:
+        type: number
+      windDirection:
+        type: string
+      windSpeed:
+        type: number
+    type: object
+  models.WeatherForecast:
+    properties:
+      condition:
+        type: string
+      date:
+        type: string
+      humidity:
+        type: number
+      icon:
+        type: string
+      maxTemp:
+        type: number
+      minTemp:
+        type: number
+      rainChance:
+        type: number
+      windSpeed:
+        type: number
     type: object
 host: localhost:8080
 info:
@@ -444,6 +766,273 @@ paths:
       summary: Kullanıcı kaydı
       tags:
       - Auth
+  /calendar/events:
+    get:
+      consumes:
+      - application/json
+      description: Takvim etkinliklerini listeler
+      parameters:
+      - description: Başlangıç tarihi
+        in: query
+        name: startDate
+        type: string
+      - description: Bitiş tarihi
+        in: query
+        name: endDate
+        type: string
+      - description: Etkinlik türü
+        in: query
+        name: type
+        type: string
+      - description: Etkinlik durumu
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Event'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Etkinlik listesi
+      tags:
+      - Calendar
+    post:
+      consumes:
+      - application/json
+      description: Yeni takvim etkinliği oluşturur
+      parameters:
+      - description: Etkinlik bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Event'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Event'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Yeni etkinlik ekleme
+      tags:
+      - Calendar
+  /calendar/events/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Belirli bir etkinliği siler
+      parameters:
+      - description: Etkinlik ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Etkinlik silme
+      tags:
+      - Calendar
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir etkinliğin detaylarını getirir
+      parameters:
+      - description: Etkinlik ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Event'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Etkinlik detayları
+      tags:
+      - Calendar
+    put:
+      consumes:
+      - application/json
+      description: Mevcut etkinlik bilgilerini günceller
+      parameters:
+      - description: Etkinlik ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Güncellenecek etkinlik bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Event'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Event'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Etkinlik güncelleme
+      tags:
+      - Calendar
+  /calendar/events/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: Etkinlik durumunu günceller
+      parameters:
+      - description: Etkinlik ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Durum bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Etkinlik durumu güncelleme
+      tags:
+      - Calendar
+  /calendar/statistics:
+    get:
+      consumes:
+      - application/json
+      description: Takvim istatistiklerini getirir
+      parameters:
+      - description: Periyot
+        in: query
+        name: period
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Takvim istatistikleri
+      tags:
+      - Calendar
   /dashboard/charts/income-expense:
     get:
       consumes:
@@ -567,23 +1156,23 @@ paths:
       summary: Dashboard özet
       tags:
       - Dashboard
-  /lands:
+  /finance/analysis:
     get:
       consumes:
       - application/json
-      description: Kullanıcının arazilerini listeler
+      description: Finansal analiz verileri getirir
       parameters:
-      - description: Sayfa numarası
+      - description: Periyot
         in: query
-        name: page
-        type: integer
-      - description: Sayfa başına kayıt
+        name: period
+        type: string
+      - description: Başlangıç tarihi
         in: query
-        name: limit
-        type: integer
-      - description: Arazi durumu
+        name: startDate
+        type: string
+      - description: Bitiş tarihi
         in: query
-        name: status
+        name: endDate
         type: string
       produces:
       - application/json
@@ -604,8 +1193,342 @@ paths:
             $ref: '#/definitions/models.APIResponse'
       security:
       - BearerAuth: []
-      summary: Arazi listesi
+      summary: Gelir-gider analizi
       tags:
+      - Finance
+  /finance/categories:
+    get:
+      consumes:
+      - application/json
+      description: Finansal işlem kategorilerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Kategori listesi
+      tags:
+      - Finance
+  /finance/summary:
+    get:
+      consumes:
+      - application/json
+      description: Finansal özet verileri getirir
+      parameters:
+      - description: Periyot
+        in: query
+        name: period
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Finansal özet
+      tags:
+      - Finance
+  /finance/transactions:
+    get:
+      consumes:
+      - application/json
+      description: Finansal işlemlerin listesini getirir
+      parameters:
+      - description: Sayfa numarası
+        in: query
+        name: page
+        type: integer
+      - description: Sayfa başına kayıt
+        in: query
+        name: limit
+        type: integer
+      - description: İşlem türü
+        in: query
+        name: type
+        type: string
+      - description: Kategori
+        in: query
+        name: category
+        type: string
+      - description: Başlangıç tarihi
+        in: query
+        name: startDate
+        type: string
+      - description: Bitiş tarihi
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: İşlem listesi
+      tags:
+      - Finance
+    post:
+      consumes:
+      - application/json
+      description: Yeni finansal işlem oluşturur
+      parameters:
+      - description: İşlem bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transaction'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Transaction'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Yeni işlem ekleme
+      tags:
+      - Finance
+  /finance/transactions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Belirli bir işlemi siler
+      parameters:
+      - description: İşlem ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: İşlem silme
+      tags:
+      - Finance
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir işlemin detaylarını getirir
+      parameters:
+      - description: İşlem ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Transaction'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: İşlem detayları
+      tags:
+      - Finance
+    put:
+      consumes:
+      - application/json
+      description: Mevcut işlem bilgilerini günceller
+      parameters:
+      - description: İşlem ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Güncellenecek işlem bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transaction'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Transaction'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: İşlem güncelleme
+      tags:
+      - Finance
+  /lands:
+    get:
+      consumes:
+      - application/json
+      - application/json
+      - application/json
+      description: |-
+        Kullanıcının ar// GetLandActivities arazi aktiviteleri
+        Arazi için yeni aktivite oluşturur
+      parameters:
+      - description: Aktivite bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LandActivityRecord'
+      - description: Sayfa numarası
+        in: query
+        name: page
+        type: integer
+      - description: Sayfa başına kayıt
+        in: query
+        name: limit
+        type: integer
+      - description: Arazi durumu
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      - application/json
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.LandActivityRecord'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      - BearerAuth: []
+      - BearerAuth: []
+      summary: Arazi aktivitesi oluşturma
+      tags:
+      - Lands
+      - Lands
       - Lands
     post:
       consumes:
@@ -776,7 +1699,7 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/models.LandActivity'
+                    $ref: '#/definitions/models.LandActivityRecord'
                   type: array
               type: object
         "401":
@@ -807,7 +1730,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/models.LandActivity'
+          $ref: '#/definitions/models.LandActivityRecord'
       produces:
       - application/json
       responses:
@@ -818,7 +1741,7 @@ paths:
             - $ref: '#/definitions/models.APIResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/models.LandActivity'
+                  $ref: '#/definitions/models.LandActivityRecord'
               type: object
         "400":
           description: Bad Request
@@ -896,6 +1819,1311 @@ paths:
       summary: Arazi istatistikleri
       tags:
       - Lands
+  /livestock:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının hayvanlarını listeler
+      parameters:
+      - description: Sayfa numarası
+        in: query
+        name: page
+        type: integer
+      - description: Sayfa başına kayıt
+        in: query
+        name: limit
+        type: integer
+      - description: Hayvan türü
+        in: query
+        name: type
+        type: string
+      - description: Sağlık durumu
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hayvan listesi
+      tags:
+      - Livestock
+    post:
+      consumes:
+      - application/json
+      description: Yeni hayvan kaydı oluşturur
+      parameters:
+      - description: Hayvan bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Livestock'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Livestock'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Yeni hayvan oluşturma
+      tags:
+      - Livestock
+  /livestock/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Belirli bir hayvanı siler
+      parameters:
+      - description: Hayvan ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hayvan silme
+      tags:
+      - Livestock
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir hayvanın detaylarını getirir
+      parameters:
+      - description: Hayvan ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Livestock'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hayvan detayları
+      tags:
+      - Livestock
+    put:
+      consumes:
+      - application/json
+      description: Mevcut hayvan bilgilerini günceller
+      parameters:
+      - description: Hayvan ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Güncellenecek hayvan bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Livestock'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Livestock'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hayvan güncelleme
+      tags:
+      - Livestock
+  /livestock/{id}/health-records:
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir hayvanın sağlık kayıtlarını listeler
+      parameters:
+      - description: Hayvan ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.HealthRecord'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Sağlık kayıtları
+      tags:
+      - Livestock
+    post:
+      consumes:
+      - application/json
+      description: Yeni sağlık kaydı oluşturur
+      parameters:
+      - description: Hayvan ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Sağlık kaydı bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.HealthRecord'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.HealthRecord'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Sağlık kaydı oluşturma
+      tags:
+      - Livestock
+  /livestock/categories:
+    get:
+      consumes:
+      - application/json
+      description: Hayvan kategorilerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.CategoryData'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hayvan kategorileri
+      tags:
+      - Livestock
+  /livestock/milk-production:
+    get:
+      consumes:
+      - application/json
+      description: Süt üretim kayıtlarını getirir
+      parameters:
+      - description: Başlangıç tarihi
+        in: query
+        name: startDate
+        type: string
+      - description: Bitiş tarihi
+        in: query
+        name: endDate
+        type: string
+      - description: Hayvan ID
+        in: query
+        name: animalId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.MilkProductionRecord'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Süt üretim kayıtları
+      tags:
+      - Livestock
+    post:
+      consumes:
+      - application/json
+      description: Yeni süt üretim kaydı oluşturur
+      parameters:
+      - description: Süt üretim bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.MilkProductionRecord'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.MilkProductionRecord'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Süt üretim kaydı oluşturma
+      tags:
+      - Livestock
+  /livestock/statistics:
+    get:
+      consumes:
+      - application/json
+      description: Hayvancılık istatistiklerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hayvancılık istatistikleri
+      tags:
+      - Livestock
+  /notifications:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının bildirimlerini listeler
+      parameters:
+      - description: Sayfa numarası
+        in: query
+        name: page
+        type: integer
+      - description: Sayfa başına kayıt
+        in: query
+        name: limit
+        type: integer
+      - description: Bildirim türü
+        in: query
+        name: type
+        type: string
+      - description: Okunmuş durumu
+        in: query
+        name: read
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Bildirim listesi
+      tags:
+      - Notifications
+  /notifications/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Belirli bir bildirimi siler
+      parameters:
+      - description: Bildirim ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Bildirim silme
+      tags:
+      - Notifications
+  /notifications/{id}/read:
+    patch:
+      consumes:
+      - application/json
+      description: Belirli bir bildirimi okundu olarak işaretler
+      parameters:
+      - description: Bildirim ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Bildirim okundu işaretleme
+      tags:
+      - Notifications
+  /notifications/mark-all-read:
+    patch:
+      consumes:
+      - application/json
+      description: Kullanıcının tüm bildirimlerini okundu olarak işaretler
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Tüm bildirimleri okundu işaretleme
+      tags:
+      - Notifications
+  /notifications/settings:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının bildirim ayarlarını getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Bildirim ayarları
+      tags:
+      - Notifications
+    put:
+      consumes:
+      - application/json
+      description: Kullanıcının bildirim ayarlarını günceller
+      parameters:
+      - description: Bildirim ayarları
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Bildirim ayarları güncelleme
+      tags:
+      - Notifications
+  /production:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının üretimlerini listeler
+      parameters:
+      - description: Sayfa numarası
+        in: query
+        name: page
+        type: integer
+      - description: Sayfa başına kayıt
+        in: query
+        name: limit
+        type: integer
+      - description: Ürün kategorisi
+        in: query
+        name: category
+        type: string
+      - description: Üretim durumu
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim listesi
+      tags:
+      - Production
+    post:
+      consumes:
+      - application/json
+      description: Yeni üretim kaydı oluşturur
+      parameters:
+      - description: Üretim bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Production'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Production'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Yeni üretim oluşturma
+      tags:
+      - Production
+  /production/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Belirli bir üretimi siler
+      parameters:
+      - description: Üretim ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim silme
+      tags:
+      - Production
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir üretimin detaylarını getirir
+      parameters:
+      - description: Üretim ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Production'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim detayları
+      tags:
+      - Production
+    put:
+      consumes:
+      - application/json
+      description: Mevcut üretim bilgilerini günceller
+      parameters:
+      - description: Üretim ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Güncellenecek üretim bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Production'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Production'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim güncelleme
+      tags:
+      - Production
+  /production/categories:
+    get:
+      consumes:
+      - application/json
+      description: Üretim kategorilerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.CategoryData'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim kategorileri
+      tags:
+      - Production
+  /production/statistics:
+    get:
+      consumes:
+      - application/json
+      description: Üretim istatistiklerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Üretim istatistikleri
+      tags:
+      - Production
+  /reports:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının raporlarını listeler
+      parameters:
+      - description: Rapor türü
+        in: query
+        name: type
+        type: string
+      - description: Periyot
+        in: query
+        name: period
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Rapor listesi
+      tags:
+      - Reports
+  /reports/{id}/download:
+    get:
+      consumes:
+      - application/json
+      description: Belirli bir raporu indirir
+      parameters:
+      - description: Rapor ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Rapor indirme
+      tags:
+      - Reports
+  /reports/comparison:
+    get:
+      consumes:
+      - application/json
+      description: İki periyot arasında karşılaştırma analizi yapar
+      parameters:
+      - description: İlk periyot
+        in: query
+        name: period1
+        required: true
+        type: string
+      - description: İkinci periyot
+        in: query
+        name: period2
+        required: true
+        type: string
+      - description: Karşılaştırılacak metrikler (virgülle ayrılmış)
+        in: query
+        name: metrics
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Karşılaştırma analizi
+      tags:
+      - Reports
+  /reports/generate:
+    post:
+      consumes:
+      - application/json
+      description: Yeni rapor oluşturur
+      parameters:
+      - description: Rapor parametreleri
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Rapor oluşturma
+      tags:
+      - Reports
+  /reports/performance-metrics:
+    get:
+      consumes:
+      - application/json
+      description: Performans metriklerini getirir
+      parameters:
+      - description: Periyot
+        in: query
+        name: period
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Performans metrikleri
+      tags:
+      - Reports
+  /settings:
+    get:
+      consumes:
+      - application/json
+      description: Kullanıcının uygulama ayarlarını getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Settings'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Uygulama ayarları
+      tags:
+      - Settings
+    put:
+      consumes:
+      - application/json
+      description: Kullanıcının uygulama ayarlarını günceller
+      parameters:
+      - description: Ayar bilgileri
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Settings'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Ayarları güncelleme
+      tags:
+      - Settings
+  /settings/backup:
+    post:
+      consumes:
+      - application/json
+      description: Kullanıcı verilerinin yedeğini oluşturur
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Veri yedekleme
+      tags:
+      - Settings
+  /settings/restore:
+    post:
+      consumes:
+      - application/json
+      description: Yedekten veri geri yükler
+      parameters:
+      - description: Geri yükleme seçenekleri
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Veri geri yükleme
+      tags:
+      - Settings
+  /settings/system-info:
+    get:
+      consumes:
+      - application/json
+      description: Sistem bilgilerini getirir
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Sistem bilgileri
+      tags:
+      - Settings
+  /weather/agricultural-alerts:
+    get:
+      consumes:
+      - application/json
+      description: Belirtilen koordinatlar için tarımsal uyarıları getirir
+      parameters:
+      - description: Enlem
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: Boylam
+        in: query
+        name: lon
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.AgriculturalAlert'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Tarımsal uyarılar
+      tags:
+      - Weather
+  /weather/current:
+    get:
+      consumes:
+      - application/json
+      description: Belirtilen koordinatlar için güncel hava durumu getirir
+      parameters:
+      - description: Enlem
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: Boylam
+        in: query
+        name: lon
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Weather'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Güncel hava durumu
+      tags:
+      - Weather
+  /weather/forecast:
+    get:
+      consumes:
+      - application/json
+      description: Belirtilen koordinatlar için 7 günlük hava durumu tahmini getirir
+      parameters:
+      - description: Enlem
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: Boylam
+        in: query
+        name: lon
+        required: true
+        type: number
+      - description: 'Gün sayısı (varsayılan: 7)'
+        in: query
+        name: days
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.WeatherForecast'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hava durumu tahmini
+      tags:
+      - Weather
 securityDefinitions:
   BearerAuth:
     description: JWT token ile kimlik doğrulama
